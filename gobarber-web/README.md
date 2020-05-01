@@ -47,11 +47,19 @@ yarn add @types/react-router-dom -D
 yarn add @types/styled-components
 
 
+
 yarn add styled-components
 
 yarn add react-icons
 
-yarn add react-router-dom
 yarn add polished
+
+yarn add @unform/core @unform/web
+
+yarn add yup *Fazer validação
+
+yarn add @types/yup -D   
+
+yarn add react-router-dom
 yarn add axios
 
