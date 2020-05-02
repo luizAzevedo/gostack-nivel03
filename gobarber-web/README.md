@@ -56,7 +56,7 @@ yarn add polished
 
 yarn add @unform/core @unform/web
 
-#### Fazer validação
+#### Fazer validação dos componentes
 
 yarn add yup
 
@@ -67,7 +67,9 @@ yarn add axios
 
 yarn add uuidv4
 
+#### Criar animação
 
+yarn add react-spring
 
 
 
