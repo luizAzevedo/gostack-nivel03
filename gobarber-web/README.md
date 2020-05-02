@@ -56,10 +56,16 @@ yarn add polished
 
 yarn add @unform/core @unform/web
 
-yarn add yup *Fazer validação
+#### Fazer validação
 
-yarn add @types/yup -D   
+yarn add yup
+
+yarn add @types/yup -D
+
+yarn add axios
+
+
 
 yarn add react-router-dom
-yarn add axios
+
 
