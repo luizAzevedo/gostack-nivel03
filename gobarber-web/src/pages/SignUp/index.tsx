@@ -38,8 +38,6 @@ const SignUp: React.FC = () => {
 
         formRef.current?.setErrors(errors);
       }
-
-      // todo toats
     }
   }, []);
 
