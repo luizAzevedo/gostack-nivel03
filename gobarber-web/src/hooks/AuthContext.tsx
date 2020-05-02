@@ -13,7 +13,10 @@ interface SignInCredenctials {
 
 interface AuthContextData {
   user: object;
-  signIn(credencials: SignInCredenctials): Promise<void>; // quando transforma o metod em "async", ele passa a retornar uma "Promise<void>"
+
+  // quando transforma o metod em "async", ele passa a retornar uma "Promise<void>"
+  signIn(credencials: SignInCredenctials): Promise<void>;
+  signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -30,6 +33,7 @@ const AuthProvider: React.FC = ({ children }) => {
     return {} as AuthState;
   }); // O estado é melhor lugar para armazenar informações
 
+  // método assíncrono
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('sessions', {
       email,
@@ -44,8 +48,15 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
   }, []);
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@GoBarber:token');
+    localStorage.removeItem('@GoBarber:user');
+
+    setData({} as AuthState);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
