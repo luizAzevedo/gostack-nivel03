@@ -56,3 +56,15 @@ yarn add -D eslint-plugin-react@^7.19.0 @typescript-eslint/eslint-plugin@latest 
 yarn add -D prettier eslint-config-prettier eslint-plugin-prettier
 
 yarn add -D eslint-import-resolver-typescript
+
+yarn add styled-components
+
+yarn add -D @types/styled-components
+
+#### https://reactnavigation.org/docs siga as intruções
+
+yarn add @react-navigation/native
+
+yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+yarn add @react-navigation/stack
