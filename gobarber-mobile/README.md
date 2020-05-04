@@ -86,3 +86,7 @@ Acrescentar no final do arquivo >android/app/build.gradle
 
 
 yarn add -D @types/react-native-vector-icons
+
+
+corrigir problemas do Iphone
+yarn add react-native-iphone-x-helper
