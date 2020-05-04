@@ -70,4 +70,19 @@ yarn add react-native-reanimated react-native-gesture-handler react-native-scree
 yarn add @react-navigation/stack
 
 
-yarn react-native link  
+yarn react-native link
+
+#### Instalando icons
+
+yarn add react-native-vector-icons
+
+Acrescentar no final do arquivo >android/app/build.gradle
+
+  project.ext.vectoricons = [
+    iconFontNames: ['Feather.ttf']
+  ]
+
+  apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+
+yarn add -D @types/react-native-vector-icons
