@@ -89,4 +89,6 @@ yarn add -D @types/react-native-vector-icons
 
 
 corrigir problemas do Iphone
+
 yarn add react-native-iphone-x-helper
+
