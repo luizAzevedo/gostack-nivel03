@@ -92,3 +92,9 @@ corrigir problemas do Iphone
 
 yarn add react-native-iphone-x-helper
 
+yarn add @unform/core @unform/mobile
+
+
+yarn add yup
+
+yarn add -D @types/yup

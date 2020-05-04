@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   Image,
   View,
@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -24,7 +26,14 @@ import {
 import logoImg from '../../assets/logo.png';
 
 const SignIn: React.FC = () => {
+  /* Manipular o formulario de forma direta e não por evento
+   * Por exemplo disparar o submit, dar foco em um campo,  */
+  const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
+
+  const handleSignIn = useCallback((data: object) => {
+    console.log(data);
+  }, []);
 
   return (
     <>
@@ -44,18 +53,22 @@ const SignIn: React.FC = () => {
               <Title>Faça seu Logon</Title>
             </View>
 
-            <Input name="email" icon="mail" placeholder="E-mail" />
+            <Form ref={formRef} onSubmit={handleSignIn}>
+              <Input name="email" icon="mail" placeholder="E-mail" />
 
-            <Input name="password" icon="lock" placeholder="Senha" />
+              <Input name="password" icon="lock" placeholder="Senha" />
 
-            <Button
-              onPress={() => {
-                console.log('Funcionou');
-              }}
-            >
-              Entrar
-            </Button>
-
+              {/* No mobile o botão não realiza o submit, não exite type="submit"
+                  Criar a ação de submit quando clicar no botão  */}
+              <Button
+                onPress={() => {
+                  /* Realizando o submit */
+                  formRef.current?.submitForm();
+                }}
+              >
+                Entrar
+              </Button>
+            </Form>
             <ForgotPassword
               onPress={() => {
                 console.log('Funcionou 1');
