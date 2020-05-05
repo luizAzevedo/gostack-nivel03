@@ -98,3 +98,9 @@ yarn add @unform/core @unform/mobile
 yarn add yup
 
 yarn add -D @types/yup
+
+
+yarn add axios
+
+criar a porta de acesso do emulador android
+adb reverse tcp:3333 tcp:3333
