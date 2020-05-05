@@ -20,7 +20,7 @@ interface SignInCredenctials {
 
 interface AuthContextData {
   user: object;
-
+  loading: boolean;
   // quando transforma o metod em "async", ele passa a retornar uma "Promise<void>"
   signIn(credencials: SignInCredenctials): Promise<void>;
   signOut(): void;
@@ -43,6 +43,8 @@ const AuthProvider: React.FC = ({ children }) => {
   // }); // O estado é melhor lugar para armazenar informações
   // #endregion
 
+  const [loading, setLoading] = useState(true);
+
   /** Disparar uma funçao que ira no storage para então preencher o data */
   useEffect(() => {
     async function loadStoragedData(): Promise<void> {
@@ -54,6 +56,7 @@ const AuthProvider: React.FC = ({ children }) => {
       if (token[1] && user[1]) {
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
+      setLoading(false);
     }
     loadStoragedData();
   }, []);
@@ -82,7 +85,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
