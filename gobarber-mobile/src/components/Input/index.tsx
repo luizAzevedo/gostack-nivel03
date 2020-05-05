@@ -1,4 +1,6 @@
 import React, {
+  useState,
+  useCallback,
   useEffect,
   useRef,
   useImperativeHandle,
@@ -36,6 +38,30 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   const { registerField, defaultValue = '', fieldName, error } = useField(name);
   const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
 
+  /** Criar dois estados, que vão anotar quando que o input recebeu o foco e
+   * outro quando o input foi preenchido */
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
+  /** Criar as funções que irão ler/setar os estados */
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+
+    /** verifica se o input contem valor seta o preenchimento
+     * dessa maneira */
+    // if (inputValueRef.current.value) {
+    //   setIsFilled(true);
+    // } else {
+    //   setIsFilled(false);
+    // }
+    // ou desta maneira, mais simplificada
+    setIsFilled(!!inputValueRef.current.value);
+  }, []);
+
   /* passar parametro do componente filho para o pai
    * de um componente interno para um componente externo */
   useImperativeHandle(ref, () => ({
@@ -62,14 +88,21 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   }, [fieldName, registerField]);
 
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#666360" />
+    // passagem de parametro para styles. "isFocused"
+    <Container isFocused={isFocused}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? '#ff9000' : '#666360'}
+      />
 
       <TextInput
         ref={inputElementRef}
         keyboardAppearance="dark"
         placeholderTextColor="#666360"
         defaultValue={defaultValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         onChangeText={(value) => {
           inputValueRef.current.value = value;
         }}
