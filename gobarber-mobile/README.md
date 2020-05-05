@@ -102,5 +102,10 @@ yarn add -D @types/yup
 
 yarn add axios
 
+
 criar a porta de acesso do emulador android
+
 adb reverse tcp:3333 tcp:3333
+
+
+yarn add @react-native-community/async-storage
