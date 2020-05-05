@@ -51,6 +51,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
+    // #region
     /** verifica se o input contem valor seta o preenchimento
      * dessa maneira */
     // if (inputValueRef.current.value) {
@@ -59,6 +60,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     //   setIsFilled(false);
     // }
     // ou desta maneira, mais simplificada
+    // #endregion
     setIsFilled(!!inputValueRef.current.value);
   }, []);
 
@@ -89,7 +91,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 
   return (
     // passagem de parametro para styles. "isFocused"
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} isErrored={!!error}>
       <Icon
         name={icon}
         size={20}
