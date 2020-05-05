@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -29,6 +30,11 @@ const SignIn: React.FC = () => {
   /* Manipular o formulario de forma direta e não por evento
    * Por exemplo disparar o submit, dar foco em um campo,  */
   const formRef = useRef<FormHandles>(null);
+
+  /* Criar a reference para primeiro o input que irá receber o foco,
+   * determinar o tipo para poder utilizar os metodos */
+  const passwordInputRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
 
   const handleSignIn = useCallback((data: object) => {
@@ -54,9 +60,32 @@ const SignIn: React.FC = () => {
             </View>
 
             <Form ref={formRef} onSubmit={handleSignIn}>
-              <Input name="email" icon="mail" placeholder="E-mail" />
+              <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                name="email"
+                icon="mail"
+                placeholder="E-mail"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+              />
 
-              <Input name="password" icon="lock" placeholder="Senha" />
+              <Input
+                ref={passwordInputRef}
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                secureTextEntry
+                /* alterando o botão no teclado */
+                returnKeyType="send"
+                onSubmitEditing={() => {
+                  /* realizando o submit no botão do teclado */
+                  formRef.current?.submitForm();
+                }}
+              />
 
               {/* No mobile o botão não realiza o submit, não exite type="submit"
                   Criar a ação de submit quando clicar no botão  */}

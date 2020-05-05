@@ -1,4 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import { TextInputProps } from 'react-native';
 import { useField } from '@unform/core';
 
@@ -13,18 +18,38 @@ interface InputValueReference {
   value: string;
 }
 
-const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
+interface InputRef {
+  focus(): void;
+}
+
+/** RefForwardingComponent
+ * Utilizar somente no caso de receber o parametro "ref"
+ * @param param0 { name, icon, ...rest }
+ * @param ref // recebe a referencia do outro componente
+ */
+const Input: React.RefForwardingComponent<InputRef, InputProps> = (
+  { name, icon, ...rest },
+  ref,
+) => {
   const inputElementRef = useRef<any>(null);
 
   const { registerField, defaultValue = '', fieldName, error } = useField(name);
   const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
+
+  /* passar parametro do componente filho para o pai
+   * de um componente interno para um componente externo */
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputElementRef.current.focus();
+    },
+  }));
 
   useEffect(() => {
     registerField<string>({
       name: fieldName,
       ref: inputValueRef.current,
       path: 'value',
-      setValue(ref: any, value) {
+      setValue(_ref: any, value) {
         inputValueRef.current.value = value;
         /* essa linha é responsavel por mudar visualmente o texto que está dentro do input */
         inputElementRef.current.setNativeProps({ text: value });
@@ -54,4 +79,6 @@ const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
   );
 };
 
-export default Input;
+/* quando utilizar RefForwardingComponent deve utilizar tambem o
+ * forwardRef(<componente>) no final  */
+export default forwardRef(Input);
